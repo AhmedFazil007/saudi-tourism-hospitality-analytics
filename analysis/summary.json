@@ -1,0 +1,12 @@
+{
+  "dataset": "Synthetic modeled tourism observations, not official Saudi tourism statistics",
+  "records": 840,
+  "months": 84,
+  "cities": 10,
+  "latest_year": "2025",
+  "latest_year_summary": {
+    "estimated_visitors": 3540000,
+    "estimated_room_revenue_sar": 1760000000
+  },
+  "note": "Rounded headline estimates; run python/analyze_tourism.py for exact computed results."
+}
