@@ -1,0 +1,83 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "a560522b7d17445699e9",
+  "position": {
+    "x": 28.0,
+    "y": 247,
+    "z": 1000,
+    "width": 565.0,
+    "height": 293,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Tourism"
+                    }
+                  },
+                  "Property": "accommodation_type"
+                }
+              },
+              "queryRef": "Tourism.accommodation_type",
+              "nativeQueryRef": "accommodation_type"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Tourism"
+                    }
+                  },
+                  "Property": "Latest Year Visitors"
+                }
+              },
+              "queryRef": "Tourism.Latest Year Visitors",
+              "nativeQueryRef": "Visitors"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Visitors by accommodation'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": "#1D2E45"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

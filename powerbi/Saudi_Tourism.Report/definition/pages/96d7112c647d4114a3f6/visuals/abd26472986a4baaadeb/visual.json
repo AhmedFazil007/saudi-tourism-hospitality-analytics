@@ -1,0 +1,31 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "abd26472986a4baaadeb",
+  "position": {
+    "x": 28,
+    "y": 17,
+    "z": 1000,
+    "width": 1144,
+    "height": 79,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": {
+              "expr": {
+                "Literal": {
+                  "Value": "'[{\"textRuns\": [{\"value\": \"TOURISM DEMAND & VISITOR TRENDS\", \"textStyle\": {\"fontFamily\": \"Segoe UI Semibold\", \"fontSize\": \"25pt\", \"color\": \"#15253A\", \"bold\": true}}]}, {\"textRuns\": [{\"value\": \"Monthly visitor activity, room revenue and year-over-year movement  \u2022  Synthetic dataset\", \"textStyle\": {\"fontFamily\": \"Segoe UI\", \"fontSize\": \"11pt\", \"color\": \"#53677D\"}}]}]'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {}
+  }
+}

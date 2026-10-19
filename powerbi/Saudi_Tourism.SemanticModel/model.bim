@@ -1,0 +1,189 @@
+{
+  "name": "SaudiTourism",
+  "compatibilityLevel": 1601,
+  "model": {
+    "culture": "en-US",
+    "sourceQueryCulture": "en-US",
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "expressions": [
+      {
+        "name": "CSVFilePath",
+        "kind": "m",
+        "expression": "\"C:\\\\Users\\\\Public\\\\Documents\\\\01_tourism_monthly_synthetic.csv\" meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]"
+      }
+    ],
+    "tables": [
+      {
+        "name": "Tourism",
+        "columns": [
+          {
+            "name": "month",
+            "dataType": "string",
+            "sourceColumn": "month",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "city",
+            "dataType": "string",
+            "sourceColumn": "city",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "region",
+            "dataType": "string",
+            "sourceColumn": "region",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "accommodation_type",
+            "dataType": "string",
+            "sourceColumn": "accommodation_type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "estimated_room_capacity",
+            "dataType": "int64",
+            "sourceColumn": "estimated_room_capacity",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "occupancy_rate_pct",
+            "dataType": "double",
+            "sourceColumn": "occupancy_rate_pct",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "average_daily_rate_sar",
+            "dataType": "double",
+            "sourceColumn": "average_daily_rate_sar",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "average_length_of_stay_nights",
+            "dataType": "double",
+            "sourceColumn": "average_length_of_stay_nights",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "estimated_visitors",
+            "dataType": "int64",
+            "sourceColumn": "estimated_visitors",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "estimated_room_revenue_sar",
+            "dataType": "double",
+            "sourceColumn": "estimated_room_revenue_sar",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Year",
+            "dataType": "int64",
+            "sourceColumn": "Year",
+            "summarizeBy": "sum"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Visitors",
+            "expression": "SUM(Tourism[estimated_visitors])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Room Revenue SAR",
+            "expression": "SUM(Tourism[estimated_room_revenue_sar])",
+            "formatString": "\"SAR \"#,0"
+          },
+          {
+            "name": "Capacity",
+            "expression": "SUM(Tourism[estimated_room_capacity])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Weighted Occupancy",
+            "expression": "DIVIDE(SUMX(Tourism,Tourism[estimated_room_capacity]*Tourism[occupancy_rate_pct]),100*[Capacity])",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "Weighted ADR SAR",
+            "expression": "DIVIDE(SUMX(Tourism,Tourism[estimated_room_capacity]*Tourism[average_daily_rate_sar]),[Capacity])",
+            "formatString": "\"SAR \"#,0"
+          },
+          {
+            "name": "Revenue per Visitor SAR",
+            "expression": "DIVIDE([Room Revenue SAR],[Visitors])",
+            "formatString": "\"SAR \"#,0"
+          },
+          {
+            "name": "Latest Year Visitors",
+            "expression": "VAR Y=MAX(Tourism[Year]) RETURN CALCULATE([Visitors],FILTER(ALL(Tourism[Year],Tourism[month]),Tourism[Year]=Y))",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Latest Year Revenue",
+            "expression": "VAR Y=MAX(Tourism[Year]) RETURN CALCULATE([Room Revenue SAR],FILTER(ALL(Tourism[Year],Tourism[month]),Tourism[Year]=Y))",
+            "formatString": "\"SAR \"#,0"
+          },
+          {
+            "name": "Latest Year Occupancy",
+            "expression": "VAR Y=MAX(Tourism[Year]) RETURN CALCULATE([Weighted Occupancy],FILTER(ALL(Tourism[Year],Tourism[month]),Tourism[Year]=Y))",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "Latest Year ADR",
+            "expression": "VAR Y=MAX(Tourism[Year]) RETURN CALCULATE([Weighted ADR SAR],FILTER(ALL(Tourism[Year],Tourism[month]),Tourism[Year]=Y))",
+            "formatString": "\"SAR \"#,0"
+          },
+          {
+            "name": "Latest Year Revenue per Visitor",
+            "expression": "DIVIDE([Latest Year Revenue],[Latest Year Visitors])",
+            "formatString": "\"SAR \"#,0"
+          },
+          {
+            "name": "Visitors Previous Year",
+            "expression": "VAR Y=MAX(Tourism[Year]) RETURN CALCULATE([Visitors],FILTER(ALL(Tourism[Year],Tourism[month]),Tourism[Year]=Y-1))",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Revenue Previous Year",
+            "expression": "VAR Y=MAX(Tourism[Year]) RETURN CALCULATE([Room Revenue SAR],FILTER(ALL(Tourism[Year],Tourism[month]),Tourism[Year]=Y-1))",
+            "formatString": "\"SAR \"#,0"
+          },
+          {
+            "name": "Visitors YoY",
+            "expression": "DIVIDE([Latest Year Visitors]-[Visitors Previous Year],[Visitors Previous Year])",
+            "formatString": "+0.0%;-0.0%;0.0%"
+          },
+          {
+            "name": "Revenue YoY",
+            "expression": "DIVIDE([Latest Year Revenue]-[Revenue Previous Year],[Revenue Previous Year])",
+            "formatString": "+0.0%;-0.0%;0.0%"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Tourism",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(CSVFilePath), [Delimiter=\",\", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Types = Table.TransformColumnTypes(Headers, {{\"month\", type date}, {\"city\", type text}, {\"region\", type text}, {\"accommodation_type\", type text}, {\"estimated_room_capacity\", Int64.Type}, {\"occupancy_rate_pct\", type number}, {\"average_daily_rate_sar\", type number}, {\"average_length_of_stay_nights\", type number}, {\"estimated_visitors\", Int64.Type}, {\"estimated_room_revenue_sar\", type number}}, \"en-US\"),",
+                "    MonthText = Table.TransformColumns(Types, {{\"month\", each Date.ToText(_, \"yyyy-MM\"), type text}}),",
+                "    AddYear = Table.AddColumn(MonthText, \"Year\", each Number.FromText(Text.Start([month], 4)), Int64.Type)",
+                "in",
+                "    AddYear"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
