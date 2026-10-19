@@ -4,9 +4,25 @@
   "months": 84,
   "cities": 10,
   "latest_year": "2025",
-  "latest_year_summary": {
-    "estimated_visitors": 3540000,
-    "estimated_room_revenue_sar": 1760000000
+  "overall": {
+    "estimated_visitors": 26203532,
+    "estimated_room_revenue_sar": 12653315524.97,
+    "capacity_weighted_occupancy_pct": 57.13,
+    "capacity_weighted_adr_sar": 319.63,
+    "revenue_per_estimated_visitor_sar": 482.89
   },
-  "note": "Rounded headline estimates; run python/analyze_tourism.py for exact computed results."
+  "latest_year_summary": {
+    "estimated_visitors": 3537248,
+    "estimated_room_revenue_sar": 1756168042.33,
+    "capacity_weighted_occupancy_pct": 56.76,
+    "capacity_weighted_adr_sar": 323.09,
+    "revenue_per_estimated_visitor_sar": 496.48
+  },
+  "first_year_summary": {
+    "estimated_visitors": 3721986,
+    "estimated_room_revenue_sar": 1794628739.0,
+    "capacity_weighted_occupancy_pct": 56.15,
+    "capacity_weighted_adr_sar": 324.87,
+    "revenue_per_estimated_visitor_sar": 482.17
+  }
 }
