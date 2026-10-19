@@ -1,0 +1,41 @@
+{
+  "name": "Saudi Tourism | Desert Oasis",
+  "dataColors": [
+    "#007F78",
+    "#D99A45",
+    "#146B89",
+    "#A65E46",
+    "#75A9A0",
+    "#8D789D",
+    "#BFA76A",
+    "#487F99"
+  ],
+  "background": "#F8F6F1",
+  "foreground": "#183B42",
+  "tableAccent": "#007F78",
+  "good": "#16866D",
+  "neutral": "#D99A45",
+  "bad": "#B65A50",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 29,
+      "color": "#183B42"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 14,
+      "color": "#183B42"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#183B42"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#52686A"
+    }
+  }
+}
