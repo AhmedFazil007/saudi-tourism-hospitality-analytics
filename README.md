@@ -65,12 +65,12 @@ I use **2025-only city comparisons** so that I don't accidentally treat observat
 
 | File or folder | Purpose |
 | --- | --- |
-| [Dataset](data/01_tourism_monthly_synthetic.csv) | Synthetic monthly observations |
+| [Dataset](data/01_tourism_monthly_synthetic.csv) | Synthetic monthly observations (upload pending) |
 | [Python](python/analyze_tourism.py) | Validation and repeatable summary calculations |
 | [SQL](sql/tourism_analysis.sql) | Trend, city, occupancy and revenue queries |
 | [Analysis outputs](analysis/) | Generated CSVs, JSON and SQLite database |
 | [Power BI project](powerbi/Saudi_Tourism.pbip) | Editable four-page report |
-| [HTML dashboard](dashboard/tourism_dashboard.html) | Standalone interactive exploration |
+
 | [Power BI setup](POWER_BI_SETUP.md) | Local data-source setup and refresh |
 
 To regenerate the analysis from the repository root, run:
