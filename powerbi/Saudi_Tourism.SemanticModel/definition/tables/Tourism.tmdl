@@ -1,0 +1,145 @@
+table Tourism
+	lineageTag: ee978df6-32b7-47c6-94ae-2376e65ddc0a
+
+	measure Visitors = SUM(Tourism[estimated_visitors])
+		formatString: #,0
+		lineageTag: 3b68b774-f820-49c5-ba58-f4c4469c6b36
+
+	measure 'Room Revenue SAR' = SUM(Tourism[estimated_room_revenue_sar])
+		formatString: "SAR "#,0
+		lineageTag: 92e01800-8dfe-4624-8009-fac4db8011f8
+
+	measure Capacity = SUM(Tourism[estimated_room_capacity])
+		formatString: #,0
+		lineageTag: 6f6ecb0c-5ca0-44e9-8df9-d5e81272f86b
+
+	measure 'Weighted Occupancy' = DIVIDE(SUMX(Tourism,Tourism[estimated_room_capacity]*Tourism[occupancy_rate_pct]),100*[Capacity])
+		formatString: 0.0%
+		lineageTag: e4454a05-fdb6-4076-9c8b-0f541390394b
+
+	measure 'Weighted ADR SAR' = DIVIDE(SUMX(Tourism,Tourism[estimated_room_capacity]*Tourism[average_daily_rate_sar]),[Capacity])
+		formatString: "SAR "#,0
+		lineageTag: 4c6d7e52-48a0-4bea-b6f6-92d8da47a9af
+
+	measure 'Revenue per Visitor SAR' = DIVIDE([Room Revenue SAR],[Visitors])
+		formatString: "SAR "#,0
+		lineageTag: ba3f090d-5dd2-42ee-b1dd-55a74515382d
+
+	measure 'Latest Year Visitors' = VAR Y=MAX(Tourism[Year]) RETURN CALCULATE([Visitors],FILTER(ALL(Tourism[Year],Tourism[month]),Tourism[Year]=Y))
+		formatString: #,0
+		lineageTag: 8e1d7fbf-8f04-47b5-b3e0-bcf35648afd8
+
+	measure 'Latest Year Revenue' = VAR Y=MAX(Tourism[Year]) RETURN CALCULATE([Room Revenue SAR],FILTER(ALL(Tourism[Year],Tourism[month]),Tourism[Year]=Y))
+		formatString: "SAR "#,0
+		lineageTag: e3a89923-5307-43c9-a623-67752271e039
+
+	measure 'Latest Year Occupancy' = VAR Y=MAX(Tourism[Year]) RETURN CALCULATE([Weighted Occupancy],FILTER(ALL(Tourism[Year],Tourism[month]),Tourism[Year]=Y))
+		formatString: 0.0%
+		lineageTag: d641190f-b8f5-4a52-aebd-5ba22ab692d5
+
+	measure 'Latest Year ADR' = VAR Y=MAX(Tourism[Year]) RETURN CALCULATE([Weighted ADR SAR],FILTER(ALL(Tourism[Year],Tourism[month]),Tourism[Year]=Y))
+		formatString: "SAR "#,0
+		lineageTag: 32d38e87-8987-4788-8b5c-f2b3505b4d6a
+
+	measure 'Latest Year Revenue per Visitor' = DIVIDE([Latest Year Revenue],[Latest Year Visitors])
+		formatString: "SAR "#,0
+		lineageTag: 97cac525-cc6a-41ca-ae07-27b3d672b93d
+
+	measure 'Visitors Previous Year' = VAR Y=MAX(Tourism[Year]) RETURN CALCULATE([Visitors],FILTER(ALL(Tourism[Year],Tourism[month]),Tourism[Year]=Y-1))
+		formatString: #,0
+		lineageTag: 3afcd202-3da9-4f20-8257-ef957788ed2f
+
+	measure 'Revenue Previous Year' = VAR Y=MAX(Tourism[Year]) RETURN CALCULATE([Room Revenue SAR],FILTER(ALL(Tourism[Year],Tourism[month]),Tourism[Year]=Y-1))
+		formatString: "SAR "#,0
+		lineageTag: 4c044eea-b6ef-442b-837d-66aed1067724
+
+	measure 'Visitors YoY' = DIVIDE([Latest Year Visitors]-[Visitors Previous Year],[Visitors Previous Year])
+		formatString: +0.0%;-0.0%;0.0%
+		lineageTag: e146d3b8-f334-4dfa-bbf2-516dd2234699
+
+	measure 'Revenue YoY' = DIVIDE([Latest Year Revenue]-[Revenue Previous Year],[Revenue Previous Year])
+		formatString: +0.0%;-0.0%;0.0%
+		lineageTag: b35516f5-0e53-4ff6-88e4-842737733b34
+
+	column month
+		dataType: string
+		lineageTag: 1517c674-f3ad-47ab-b4b6-9e2bcb41915b
+		summarizeBy: none
+		sourceColumn: month
+
+	column city
+		dataType: string
+		lineageTag: 4b0261ef-724a-484c-a987-db640a6bd566
+		summarizeBy: none
+		sourceColumn: city
+
+	column region
+		dataType: string
+		lineageTag: 9df84784-d6a6-4691-9fd4-b4ee69c38a9d
+		summarizeBy: none
+		sourceColumn: region
+
+	column accommodation_type
+		dataType: string
+		lineageTag: 73eab3c0-5c5f-4ef8-b285-212c6d23a975
+		summarizeBy: none
+		sourceColumn: accommodation_type
+
+	column estimated_room_capacity
+		dataType: int64
+		lineageTag: 3a1e4fda-068c-4671-be2b-a114a8adbc53
+		summarizeBy: sum
+		sourceColumn: estimated_room_capacity
+
+	column occupancy_rate_pct
+		dataType: double
+		lineageTag: 98a2dd06-7ebb-4ab2-8063-9e96dc0ceea2
+		summarizeBy: sum
+		sourceColumn: occupancy_rate_pct
+
+	column average_daily_rate_sar
+		dataType: double
+		lineageTag: dff177f3-b2c5-4b63-bbe9-512a0f4f0a04
+		summarizeBy: sum
+		sourceColumn: average_daily_rate_sar
+
+	column average_length_of_stay_nights
+		dataType: double
+		lineageTag: 081a3646-095a-4456-ab8b-f28741bb82a6
+		summarizeBy: sum
+		sourceColumn: average_length_of_stay_nights
+
+	column estimated_visitors
+		dataType: int64
+		lineageTag: 5b8aa3e3-7cec-4cdb-91fd-ae9b61b7a7e4
+		summarizeBy: sum
+		sourceColumn: estimated_visitors
+
+	column estimated_room_revenue_sar
+		dataType: double
+		lineageTag: e82fe9d7-6493-4de2-9f6e-63a94f7e26b0
+		summarizeBy: sum
+		sourceColumn: estimated_room_revenue_sar
+
+	column Year
+		dataType: int64
+		lineageTag: df567e1b-de97-406e-946e-293f2402f4a2
+		summarizeBy: sum
+		sourceColumn: Year
+
+	partition Tourism = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(CSVFilePath), [Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Types = Table.TransformColumnTypes(Headers, {{"month", type date}, {"city", type text}, {"region", type text}, {"accommodation_type", type text}, {"estimated_room_capacity", Int64.Type}, {"occupancy_rate_pct", type number}, {"average_daily_rate_sar", type number}, {"average_length_of_stay_nights", type number}, {"estimated_visitors", Int64.Type}, {"estimated_room_revenue_sar", type number}}, "en-US"),
+				    MonthText = Table.TransformColumns(Types, {{"month", each Date.ToText(_, "yyyy-MM"), type text}}),
+				    AddYear = Table.AddColumn(MonthText, "Year", each Number.FromText(Text.Start([month], 4)), Int64.Type)
+				in
+				    AddYear
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

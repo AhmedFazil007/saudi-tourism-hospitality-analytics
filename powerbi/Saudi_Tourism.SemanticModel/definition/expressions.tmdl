@@ -1,0 +1,7 @@
+expression CSVFilePath = "C:\Users\fazil\Downloads\Saudi_Tourism_Hospitality_Analytics_All_Files_With_PBIP\data\01_tourism_monthly_synthetic.csv" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 165371e7-cee1-4ada-bd74-856b66503940
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
